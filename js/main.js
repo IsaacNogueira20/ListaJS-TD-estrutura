@@ -58,7 +58,7 @@
 //         alert(error.message);
 //     }
 // }
-var list = new OrderedList();
+var list = new OrderedListTd();
 
 console.log(list)
 
