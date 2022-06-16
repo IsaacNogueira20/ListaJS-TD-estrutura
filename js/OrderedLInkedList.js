@@ -1,48 +1,155 @@
 
-class OrderedLinkedList extends LinkedList {
+// class OrderedLinkedList extends LinkedList {
 
+//   constructor() {
+//     super();
+//   }
+
+//   insert(position, value) {
+//     throw new Error('Não é possível escolher a posição em lista ordenada');
+//   }
+
+//   append(value) {
+//     if (this._isInvalid(value)) {
+//       throw new Error('Valor inválido');
+//     }
+
+//     const node = new Node(value);
+
+//     if (this.head === null) {
+//       this.head = node;
+//     } else {
+
+//       let cursor = this.head;
+//       let previous = null;
+//       while (cursor !== null) {
+//         if (cursor.content > value) {
+//           break;
+//         }
+//         previous = cursor;
+//         cursor = cursor.next;
+//       }
+
+//       if (!previous) {
+//         this.head = node;
+//         node.next = cursor;
+//       } else if (!cursor) {
+//         previous.next = node;
+//       } else {
+//         previous.next = node;
+//         node.next = cursor;
+//       }
+//     }
+
+//     this.length++;
+//   }
+
+
+// }
+
+class OrderedDoublyLinkedList extends LinkedList {
   constructor() {
-    super();
+      super();
   }
-
-  insert(position, value) {
-    throw new Error('Não é possível escolher a posição em lista ordenada');
+  
+  insert(position, value,indexvalue) {
+      throw new Error("Não é possível escolher a posição em lista ordenada");
   }
-
+  
   append(value) {
-    if (this._isInvalid(value)) {
-      throw new Error('Valor inválido');
-    }
-
-    const node = new Node(value);
-
-    if (this.head === null) {
-      this.head = node;
-    } else {
-
+      const node = new Node(value);
       let cursor = this.head;
       let previous = null;
-      while (cursor !== null) {
-        if (cursor.content > value) {
-          break;
-        }
-        previous = cursor;
-        cursor = cursor.next;
+      if (this._isInvalid(value)) {
+      throw new Error("Valor inválido");
       }
-
-      if (!previous) {
-        this.head = node;
-        node.next = cursor;
-      } else if (!cursor) {
-        previous.next = node;
+      if (this.head === null) {
+      this.head = node;
       } else {
-        previous.next = node;
-        node.next = cursor;
+      while (cursor !== null && cursor.content < value) {
+          previous = cursor;
+          cursor = cursor.next;
       }
-    }
-
-    this.length++;
+      
+      if( cursor !== null){
+          if(previous !== null){
+              node.previous = cursor.previous;
+              cursor.previous.next = node;
+              cursor.previous = node;
+              node.next = cursor;
+              cursor = node;
+          }else{
+              node.next = cursor;
+              node.previous = null;
+              this.head = node;
+          }
+      }else{
+          if(previous === null){
+              cursor = node;
+          }else{
+              node.previous = previous;
+              previous.next = node;
+          }
+      }
+      }    
   }
-
-
-}
+  toString(separator = "-") {
+      let cursor = this.head;
+      let text = "";
+      while (cursor) {
+      text += cursor.content + separator;
+      cursor = cursor.next;
+      }
+      const lastSeparatorIndex = text.length - separator.length;
+      console.log(text);
+      console.log(this);
+  
+      return text.slice(0, lastSeparatorIndex);
+  }
+  remove(value) {
+      let cursor = this.head;
+      let i = 0;
+      let previous = null;
+      while (cursor) {
+          if (cursor.content === value) {
+              if (previous) {
+                  previous.next = cursor.next;
+                  if (cursor.next) {
+                      cursor.next.previous = previous;
+                  }
+              } else {
+                  this.head = cursor.next;
+              }
+              this.length--;
+              return;
+          }
+          previous = cursor;
+          cursor = cursor.next;
+          i++
+      }
+      throw new Error('Valor não encontrado');
+  }
+  removeAt(position) {
+      let previous = null;
+      let cursor = this.head;
+      let i = 0;
+      while (cursor) {
+          if ((i + 1) === position) {
+              if (i !== 0) {
+                  cursor.previous.next = cursor.next;
+              }else{
+                  this.head = cursor.next;
+              }
+              if (cursor.next) {
+                  cursor.next.previous = previous;
+              }
+              this.length--;
+              return;
+          }
+          previous = cursor;
+          cursor = cursor.next;
+          i++
+      }
+      throw new Error('Valor não encontrado');
+  }
+  }
