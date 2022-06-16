@@ -92,8 +92,8 @@ function insertElement() {
 
 function insertElementAt() {
     try {
-        let pos = prompt('digite uma posição a inserir:');
-        let val = prompt('digite um valor a ser inserido:');
+        let pos = prompt('digite uma posição para inserir:');
+        let val = prompt('digite um valor para ser inserido:');
         list.insert(parseInt(pos), parseInt(val));
         showData();
     } catch (error) {
@@ -103,7 +103,7 @@ function insertElementAt() {
 
 function removeElement() {
     try {
-        let val = prompt('digite um valor a ser removido:');
+        let val = prompt('digite um valor para ser removido:');
         list.remove(parseInt(val));
         showData();
     } catch (error) {
@@ -113,7 +113,7 @@ function removeElement() {
 
 function removeElementAt() {
     try {
-        let pos = prompt('digite uma posição a remover:');
+        let pos = prompt('digite uma posição para remover:');
         list.removeAt(parseInt(pos));
         showData();
     } catch (error) {
